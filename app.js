@@ -3,9 +3,20 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var mysql = require('mysql');
 
-var indexRouter = require('./routes/index');
+var connection = mysql.createConnection({
+  host     : 'localhost',
+  user     : 'root',
+  password : 'root',
+  database : 'loja'
+});
+
+connection.connect();
+
+var indexRouter = require('./routes/index')(connection);
 var usersRouter = require('./routes/users');
+
 
 var app = express();
 

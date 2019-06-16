@@ -1,9 +1,13 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const upload = require('../controller/upload');
+const router = express.Router();
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
+module.exports = (connection) => {
+  const controller = require('../controller/produto-controller')(connection);
 
-module.exports = router;
+  router.get('/', controller.get);
+  router.post('/', upload.any('teste'), controller.post);
+
+  return router;
+}
+
