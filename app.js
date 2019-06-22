@@ -14,8 +14,8 @@ var connection = mysql.createConnection({
 
 connection.connect();
 
-var indexRouter = require('./routes/index')(connection);
-var usersRouter = require('./routes/users');
+var admin = require('./routes/produto-admin')(connection);
+var market = require('./routes/produtos')(connection);
 
 
 var app = express();
@@ -30,8 +30,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/admin', admin);
+app.use('/', market);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

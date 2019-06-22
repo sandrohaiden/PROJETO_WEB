@@ -4,8 +4,8 @@ const slugify = require('slugify');
 
 const path = 'public/images/'
 
-function createDir (nome){
-    fse.ensureDir(path+nome, err => console.log);
+async function createDir (nome){
+    await fse.ensureDir(path+nome, err => console.log);
 }
 
 const storage = multer.diskStorage({

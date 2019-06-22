@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel='stylesheet' href='http://127.0.0.1:3000/stylesheets/materialize.min.css' />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+
+<style>
+  #form1 {
+    margin-left: 34%;
+  }
+
+  .slider .slides {
+    background-color: transparent;
+    margin: 0;
+    height: 400px;
+  }
+
+  .slider .slides li img {
+    height: 100%;
+    width: 100%;
+    background-position: center;
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+  }
+</style>
+
+<body>
+  <script>
+    var x = <%- produto.propreco %>/12;
+    x = x.toFixed(2);
+  </script>
+  <% include partials/header %>
+  <h4><%= produto.pronome %></h4>
+  <div class="row valign-wrapper" style="background-color: dimgray">
+    <div class="col l9" style="background-color: white">
+      <div class="slider">
+        <ul class="slides">
+          <% for(imagem of produto.projfotos){ %>
+          <li>
+            <img src="http://127.0.0.1:3000<%= imagem.path %>">
+          </li>
+          <% } %>
+        </ul>
+      </div>
+    </div>
+    <div class="col l3">
+      <div class="row" style="text-align: center;">
+          <h4>R$<%= produto.propreco %></h4>
+          <a class="waves-effect waves-light btn pulse"><i class="material-icons left">shopping_cart</i>COMPRAR</a>
+          <br>
+          <br>
+          Em até 12x no valor de R$ <span id="parcela"></span>
+      </div>
+    </div>
+  </div>
+
+  <h4>Descrição do Produto</h4>
+  <div class="container" id="desc">
+
+  </div>
+
+  <script type="text/javascript" src="http://127.0.0.1:3000/javascripts/jquery.js"></script>
+  <script type="text/javascript" src="http://127.0.0.1:3000/javascripts/materialize.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      $('.sidenav').sidenav();
+    });
+    $(document).ready(function () {
+      $('.slider').slider();
+    });
+    $('#desc').html('<%- produto.prodescricao %>')
+    $('#parcela').html(x);
+  </script>
+
+</body>
+
+</html>
