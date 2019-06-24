@@ -16,6 +16,7 @@ connection.connect();
 
 var admin = require('./routes/produto-admin')(connection);
 var market = require('./routes/produtos')(connection);
+var car = require('./routes/carrinho')(connection);
 
 
 var app = express();
@@ -32,6 +33,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/admin', admin);
 app.use('/', market);
+app.use('/', car);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
