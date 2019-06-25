@@ -8,10 +8,6 @@
 </head>
 
 <style>
-  #form1 {
-    margin-left: 34%;
-  }
-
   .slider .slides {
     background-color: transparent;
     margin: 0;
@@ -28,8 +24,9 @@
 </style>
 
 <body>
+  <script type="text/javascript" src="http://127.0.0.1:3000/javascripts/functions.js"></script>
   <script>
-    var x = <%- produto.propreco %>/12;
+    var x = <%- produto.propreco %> /12;
     x = x.toFixed(2);
   </script>
   <% include partials/header %>
@@ -48,11 +45,12 @@
     </div>
     <div class="col l3">
       <div class="row" style="text-align: center;">
-          <h4>R$<%= produto.propreco %></h4>
-          <a class="waves-effect waves-light btn pulse"><i class="material-icons left">shopping_cart</i>COMPRAR</a>
-          <br>
-          <br>
-          Em até 12x no valor de R$ <span id="parcela"></span>
+        <h4>R$<%= produto.propreco %></h4>
+        <a class="waves-effect waves-light btn pulse" onclick="teste(<%=JSON.stringify(produto)%>);"><i
+            class="material-icons left">shopping_cart</i>COMPRAR</a>
+        <br>
+        <br>
+        Em até 12x no valor de R$ <span id="parcela"></span>
       </div>
     </div>
   </div>

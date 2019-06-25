@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel='stylesheet' href='/stylesheets/materialize.min.css' />
+  <link rel='stylesheet' href='/stylesheets/palette.css' />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+</head>
+
+
+<body>
+  <script>
+    function envia(x) {
+      var cpf = $('#cpf').val();
+      var senha = $('#senha').val();
+      var tipo = x
+      $.ajax({
+        url: '/login',
+        method: 'post',
+        data: { cpf: cpf, senha: senha, tipo: tipo }
+      }).done((msg)=>{
+        console.log(msg);
+        window.sessionStorage.setItem('usuario', JSON.stringify(msg));
+        if(msg.tipdescricao == 'administrador'){
+          $(location).attr('href', '/admin');
+        }
+      })
+    }
+
+    function bt1(){
+      $('#send').attr('onclick', "envia('cliente')");
+    }
+    function bt2(){
+      $('#send').attr('onclick', "envia('administrador')");
+    }
+  </script>
+
+  <% include partials/header %>
+
+  <div class="container center-align">
+    <div class="row">
+      <div>
+        <a class="waves-effect waves-light btn-large modal-trigger" onclick="bt1()" href="#modal1"><i
+            class="material-icons left">cloud</i>Cliente</a>
+      </div>
+    </div>
+    <div class="row center-align">
+      <div>
+        <a class="waves-effect waves-light btn-large modal-trigger" onclick="bt2()" href="#modal1"><i
+            class="material-icons left">cloud</i>Administrador</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Structure -->
+  <div id="modal1" class="modal">
+    <div class="modal-content">
+      <form class="login-form">
+        <div class="row">
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <i class="material-icons prefix">person_outline</i>
+            <input class="validate" id="cpf" type="text">
+            <label for="cpf" data-error="wrong" data-success="right">Email</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <i class="material-icons prefix">lock_outline</i>
+            <input id="senha" type="password">
+            <label for="senha">Password</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <a class="btn waves-effect waves-light col s12" id="send">Login</a>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s6 m6 l6">
+            <p class="margin medium-small"><a href="#">Register Now!</a></p>
+          </div>
+          <div class="input-field col s6 m6 l6">
+            <p class="margin right-align medium-small"><a href="#">Forgot password?</a></p>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script type="text/javascript" src="javascripts/jquery.js"></script>
+  <script type="text/javascript" src="javascripts/materialize.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      $('.sidenav').sidenav();
+    });
+    $(document).ready(function () {
+      $('.modal').modal();
+    });
+  </script>
+
+</body>
+
+</html>

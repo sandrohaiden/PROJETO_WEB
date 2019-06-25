@@ -9,7 +9,7 @@ module.exports = (connection)=>{
             var result = await consulta.execQuery('select * from categoria');
             console.log(req.body);
             console.log(result);
-            res.render('admin/produto-cadastro', {cat: result});
+            res.render('admin/main', {cat: result});
         },
 
         post: async function(req, res, next){

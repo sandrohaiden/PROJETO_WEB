@@ -8,6 +8,23 @@ CREATE TABLE cliente(
     clicpf varchar(14) not null
 );
 
+CREATE TABLE tipo(
+	tipcodigo int not null primary key auto_increment,
+    tipdescricao varchar(200)
+);
+INSERT INTO tipo(tipdescricao) VALUES ('cliente'), ('administrador');
+
+CREATE TABLE usuario(
+	usucodigo int not null primary key auto_increment,
+    usunome varchar(200) not null,
+    usucpf varchar(14) not null,
+    ususenha varchar(200) not null,
+    usutipcodigo int not null,
+    foreign key(usutipcodigo) references tipo(tipcodigo)
+);
+INSERT INTO usuario(usunome, usucpf, ususenha, usutipcodigo)
+VALUES ('sandro', '04258764205', '123', 1), ('sandro', '04258764205', '123', 2);
+
 CREATE TABLE categoria(
 	catcodigo int not null primary key auto_increment,
     catdescricao varchar(200) not null,
@@ -18,7 +35,7 @@ INSERT INTO categoria(catdescricao, catsupercategoria) values ('Eletrônicos', n
 
 CREATE TABLE produto(
 	procodigo int not null primary key auto_increment,
-    pronome varchar(200) not null,
+    pronome varchar(200) unique not null,
     prodescricao text,
     proqtd int not null default 10,
     projfotos JSON,
@@ -52,6 +69,14 @@ CREATE TABLE itemvenda(
     foreign key(itvcomcodigo) references compra(comcodigo)
 );
 
+CREATE TABLE candidatos(
+	cancpf varchar(14) not null primary key,
+    cannome varchar(200) not null,
+    canmensagem text,
+    cancurriculo varchar(200),
+    candata timestamp default now()    
+);
+
 DELIMITER #
 CREATE PROCEDURE adicionar_produto(p_nome varchar(200), p_descricao text, p_qtd int,
 p_jfotos JSON, p_valor decimal(8,2), p_preco decimal(8,2), p_categoria int)
@@ -70,5 +95,15 @@ BEGIN
 END#
 DELIMITER ;
 
+DELIMITER #
+CREATE PROCEDURE listar_produtos()
+BEGIN
+	SELECT produto.*, catdescricao FROM produto
+    INNER JOIN categoria ON procatcodigo = catcodigo;
+END#
+DELIMITER ;
+
+call listar_produtos();
+
 select JSON_EXTRACT(projfotos, '$[*].path') from produto;
-select projfotos from produto;
+select * from usuario;

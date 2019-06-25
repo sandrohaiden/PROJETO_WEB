@@ -9,10 +9,6 @@
 </head>
 
 <style>
-  #form1 {
-    margin-left: 34%;
-  }
-
   .slider .slides {
     background-color: transparent;
     margin: 0;
@@ -35,6 +31,9 @@
     console.log(<%- JSON.stringify(produtos) %>)
   </script>
   <script type="text/javascript" src="javascripts/functions.js"></script>
+  <div class="center-align">
+      <h3>Ofertas Quentes!</h3>
+  </div>
   <div class="row">
     <% for(produto of produtos){ %>
     <div class="col l3">
@@ -47,6 +46,9 @@
         <div class="card-content">
           <span class="card-title activator grey-text text-darken-4"><%= produto.pronome %><i
               class="material-icons right">more_vert</i></span>
+          <div class="center-align">
+            <h5>R$ <%- produto.propreco %></h5>
+          </div>
           <p>
             <div class="row" style="text-align: center">
               <a class="waves-effect waves-light btn" onclick="teste(<%=JSON.stringify(produto)%>);"><i class="material-icons left">shopping_cart</i>COMPRAR</a>
@@ -55,7 +57,7 @@
         </div>
         <div class="card-reveal">
           <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
-          <p>Here is some more information about this product that is only revealed once clicked on.</p>
+          <p><%- produto.prodescricao %></p>
         </div>
       </div>
     </div>
