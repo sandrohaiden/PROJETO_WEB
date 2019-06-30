@@ -6,10 +6,10 @@ module.exports = (connection)=>{
 
     controller = {
         get: async function (req, res, next){
-            var result = await consulta.execQuery('select * from categoria');
+            var result = await consulta.execQuery('call listar_produtos()');
             console.log(req.body);
             console.log(result);
-            res.render('admin/main', {cat: result});
+            res.render('admin/main', {produtos: result});
         },
 
         post: async function(req, res, next){
@@ -29,7 +29,7 @@ module.exports = (connection)=>{
             preco = parseFloat(preco);
             await consulta.execQuery('CALL adicionar_produto(?,?,0,?,?,?,?)',
             [body.produto, body.desc, JSON.stringify(images), valor, preco, body.cat])
-            res.send('ok');
+            res.redirect('/admin');
         }
     }
 

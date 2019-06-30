@@ -96,6 +96,17 @@ END#
 DELIMITER ;
 
 DELIMITER #
+CREATE PROCEDURE atualizar_produto(p_nome varchar(200), p_descricao text, p_qtd int,
+p_jfotos JSON, p_valor decimal(8,2), p_preco decimal(8,2), p_categoria int)
+BEGIN
+	INSERT INTO produto(pronome, prodescricao, proqtd, projfotos,
+	provalor, propreco, procatcodigo)
+	VALUES
+	(p_nome, p_descricao, p_qtd, p_jfotos, p_valor, p_preco, p_categoria);
+END#
+DELIMITER ;
+
+DELIMITER #
 CREATE PROCEDURE listar_produtos()
 BEGIN
 	SELECT produto.*, catdescricao FROM produto
@@ -103,7 +114,16 @@ BEGIN
 END#
 DELIMITER ;
 
+DELIMITER #
+CREATE PROCEDURE buscar_produto(p_id int)
+BEGIN
+	SELECT produto.*, catdescricao FROM produto
+    INNER JOIN categoria ON procatcodigo = catcodigo
+    WHERE procodigo = p_id;
+END#
+DELIMITER ;
+
 call listar_produtos();
 
 select JSON_EXTRACT(projfotos, '$[*].path') from produto;
-select * from usuario;
+select * from produto;

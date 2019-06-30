@@ -11,11 +11,39 @@
 </head>
 
 <body>
+
     <% include ../partials/header-admin %>
 
     <div id="content">
         <a class="waves-effect waves-light btn-large" href="/admin/produtos">Cadastrar Produto</a>
+
+
+        <div class="collection">
+            <a class="collection-item" style="background-color: khaki">
+                <div class="row" id="cab">
+                    <div class="col s8">
+                        <h6 style="color: black">Produto</h6>
+                    </div>
+                    <div class="col s2">
+                        <h6 style="color: black">Preço</h6>
+                    </div>
+                    <div class="col s2">
+                        <h6 style="color: black">Categoria</h6>
+                    </div>
+                </div>
+            </a>
+            <% for(produto of produtos) { %>
+            <a href="/admin/produtos/<%- produto.procodigo %>" class="collection-item">
+                <div class="row">
+                    <div class="col s8"><%- produto.pronome %></div>
+                    <div class="col s2">R$ <%- produto.propreco %></div>
+                    <div class="col s2"><%- produto.catdescricao %></div>
+                </div>
+            </a>
+            <% } %>
+        </div>
     </div>
+
 
     <script src="/javascripts/jquery.js"></script>
     <script src="/javascripts/materialize.min.js"></script>
@@ -29,14 +57,15 @@
     </script>
     <script>
         var html = '<div class="row center-align">' +
-            '<h1>Acesso não autorizaddo</h1>' +
+            '<h1>Acesso não autorizado</h1>' +
             '</div>' +
             '<div class="row center-align">' +
             '<a class="waves-effect waves-light btn-large" href="/login">Efetuar Login</a>' +
             '</div>'
 
         var usuario = JSON.parse(window.sessionStorage.getItem('usuario'));
-        if (usuario.tipdescricao != 'administrador') {
+        console.log('Temos algo ')
+        if (usuario == null || usuario.tipdescricao != 'administrador') {
             $('#content').html(html);
         }
     </script>

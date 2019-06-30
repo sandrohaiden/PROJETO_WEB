@@ -25,22 +25,20 @@
 </style>
 
 <body>
-  <% include partials/header %>
-  
-  <script>
-    console.log(<%- JSON.stringify(produtos) %>)
-  </script>
+  <span id="header">
+    <% include partials/header %>
+  </span>
   <script type="text/javascript" src="javascripts/functions.js"></script>
   <div class="center-align">
-      <h3>Ofertas Quentes!</h3>
+    <h3>Ofertas Quentes!</h3>
   </div>
   <div class="row">
     <% for(produto of produtos){ %>
-    <div class="col l3">
+    <div class="col l3 s12">
       <div class="card">
         <div class="card-image waves-effect waves-block waves-light">
           <a href="/produtos/<%= produto.procodigo %>">
-            <img src="<%= produto.projfotos[0].path%>">
+            <img style="height: 60pt;" class="responsive-img" src="<%= produto.projfotos[0].path%>">
           </a>
         </div>
         <div class="card-content">
@@ -51,13 +49,14 @@
           </div>
           <p>
             <div class="row" style="text-align: center">
-              <a class="waves-effect waves-light btn" onclick="teste(<%=JSON.stringify(produto)%>);"><i class="material-icons left">shopping_cart</i>COMPRAR</a>
+              <a class="waves-effect waves-light btn" onclick="teste(<%=JSON.stringify(produto)%>);"><i
+                  class="material-icons left">shopping_cart</i>COMPRAR</a>
             </div>
           </p>
         </div>
         <div class="card-reveal">
           <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
-          <p><%- produto.prodescricao %></p>
+          <p id="descricao"><%- produto.prodescricao %></p>
         </div>
       </div>
     </div>
@@ -70,6 +69,15 @@
     $(document).ready(function () {
       $('.sidenav').sidenav();
     });
+    $(document).ready(function () {
+      var usuario = JSON.parse(window.sessionStorage.getItem('usuario'));
+      if (usuario.tipdescricao == 'administrador') {
+        $('#nav-mobile').html('<li><a href="/carrinho">Sair</a></li>')
+      }
+    });
+  </script>
+  <script>
+    console.log(<% - JSON.stringify(produtos) %>)
   </script>
 
 </body>
